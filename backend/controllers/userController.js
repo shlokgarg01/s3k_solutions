@@ -50,6 +50,34 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+// get All Users -- Admin
+exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find().sort({ createdAt: -1 });
+
+  res.status(200).json({
+    success: true,
+    users,
+    usersCount: users.length
+  });
+});
+
+// reset password
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
+  let user = await User.findById(req.params.id)
+  if(!user) {
+    return next(new ErrorHandler("User not found.", 400));
+  }
+
+  const {password} = req.body
+  if (!password) {
+    return next(new ErrorHandler("Password is required", 400));
+  }
+  user.password = password
+
+  await user.save();
+  sendToken(user, 200, res);
+});
+
 // get user details
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);

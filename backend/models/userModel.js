@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Enums = require("../utils/Enums");
 
 const userSchema = new mongoose.Schema(
   {
@@ -14,7 +15,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       default: "dummyemail@parchunking.com",
-      unique: true
+      unique: true,
     },
     contactNumber: {
       type: String,
@@ -32,7 +33,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       minLength: [6, "Password should be greater than 6 characters"],
       select: false,
-    }
+    },
+    role: {
+      type: String,
+      default: Enums.USER_ROLES.USER,
+      enum: [Enums.USER_ROLES.USER, Enums.USER_ROLES.ADMIN],
+    },
   },
   {
     timestamps: {

@@ -6,6 +6,7 @@ const app = express();
 require('dotenv').config()
 const errorMiddleware = require("./middleware/error");
 const connectDatabase = require("./config/database.js")
+const path = require("path");
 
 const userRoutes = require("./routes/userRoutes");
 
@@ -47,6 +48,13 @@ app.get("/ping", (req, res) => {
 })
 
 app.use("/api/v1", userRoutes);
+
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.resolve(__dirname, "../frontend/build/index.html")
+  );
+});
 
 // middleware for errors
 app.use(errorMiddleware);
