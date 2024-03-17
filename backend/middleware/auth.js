@@ -15,6 +15,12 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET)
   req.user = await User.findById(decodedData.id)
+
+  // verifying that user should be signed in to one device only
+  if (req.user.token !== token) {
+    return next(new ErrorHandler("Please login..", 401))
+  }
+
   next()
 })
 

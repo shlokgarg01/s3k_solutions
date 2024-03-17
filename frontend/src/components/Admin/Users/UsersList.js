@@ -6,6 +6,7 @@ import MetaData from "../../layout/MetaData";
 import { Link, useNavigate } from "react-router-dom";
 import { readableDateTimeFromString } from "../../../helpers/DateHelpers";
 import { Enums } from "../../../utils/Enums";
+import Loader from '../../layout/Loader/Loader'
 
 const UsersList = () => {
   const alert = useAlert();
@@ -26,7 +27,7 @@ const UsersList = () => {
   return (
     <>
       <MetaData title="S3K - All Users" />
-      {loading === false && (
+      {loading ? <Loader /> : (
         <div className="row m-3">
           <div className="col">
             <div className="card">
@@ -67,7 +68,15 @@ const UsersList = () => {
                         users.map((user, index) => (
                           <tr key={index} className="align-middle">
                             <th scope="row">{index + 1}.</th>
-                            <td>{user.name}</td>
+                            <td>
+                              <Link
+                              target="_blank"
+                                className="text-decoration-none"
+                                to={`/admin/user/${user._id}`}
+                              >
+                                {user.name}
+                              </Link>
+                            </td>
                             <td>{user.email}</td>
                             <td>{user.contactNumber}</td>
                             <td>

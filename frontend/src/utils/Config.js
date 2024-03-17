@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://s3k-solutions.onrender.com'
+  baseURL: 'http://192.168.149.182:4000'
 });
 
 axiosInstance.interceptors.request.use(async function (config) {

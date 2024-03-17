@@ -11,9 +11,11 @@ export default function Input({
   return (
     <div className="form-floating">
       <div className="input-group mb-3">
-        <span className="input-group-text" id={`basic-addon${placeholder}`}>
-          {icon}
-        </span>
+        {icon && (
+          <span className="input-group-text" id={`basic-addon${placeholder}`}>
+            {icon}
+          </span>
+        )}
         <input
           type={type}
           className="form-control"

@@ -1,6 +1,8 @@
-// creating JWT Token & saving it to cookie
-const sendToken = (user, statusCode, res) => {
+// creating JWT Token & saving it
+const sendToken = async (user, statusCode, res) => {
   const token = user.getJWTToken();
+  user.token = token
+  await user.save()
 
   // options for cookies
   const options = {

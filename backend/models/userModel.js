@@ -39,6 +39,10 @@ const userSchema = new mongoose.Schema(
       default: Enums.USER_ROLES.USER,
       enum: [Enums.USER_ROLES.USER, Enums.USER_ROLES.ADMIN],
     },
+    token: {
+      type: String,
+      default: ""
+    }
   },
   {
     timestamps: {

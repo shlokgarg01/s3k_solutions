@@ -62,6 +62,11 @@ export default function ResetPassword() {
             <h5 className="card-header">Reset Password</h5>
             <div className="card-body">
               <form className="d-flex flex-column">
+                <div className="mb-3">
+                  <b>Name: </b> {user.name}<br />
+                  <b>Email: </b> {user.email}<br />
+                  <b>Contact Number: </b> {user.contactNumber}
+                </div>
                 <Input
                   type="password"
                   placeholder="Password"

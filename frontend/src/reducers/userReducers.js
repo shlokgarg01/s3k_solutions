@@ -17,6 +17,9 @@ import {
   RESET_PASSWORD_FAIL,
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
 } from "../constants/userConstants";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -160,6 +163,37 @@ export const resetUserPasswordReducer = (state = { users: [] }, action) => {
         ...state,
         error: null,
         isUpdated: false
+      };
+    default:
+      return state;
+  }
+};
+
+export const secondaryUserReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return {
+        loading: true,
+      };
+    case USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload.user,
+        userDocuments: action.payload.userDocuments,
+      };
+    case USER_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        user: null,
+        userDocuments: {},
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

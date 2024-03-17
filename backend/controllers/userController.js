@@ -1,6 +1,7 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
+const Document = require("../models/documentModel");
 const sendToken = require("../utils/jwtToken");
 
 // Register a User
@@ -57,25 +58,47 @@ exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     users,
-    usersCount: users.length
+    usersCount: users.length,
   });
 });
 
 // reset password
 exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
-  let user = await User.findById(req.params.id)
-  if(!user) {
+  let user = await User.findById(req.params.id);
+  if (!user) {
     return next(new ErrorHandler("User not found.", 400));
   }
 
-  const {password} = req.body
+  const { password } = req.body;
   if (!password) {
     return next(new ErrorHandler("Password is required", 400));
   }
-  user.password = password
+  user.password = password;
 
   await user.save();
   sendToken(user, 200, res);
+});
+
+// get user details& user documents
+exports.userDetails = catchAsyncErrors(async (req, res, next) => {
+  const userId = req.params.id;
+  let user = await User.findById(userId);
+  if (!user) {
+    return next(new ErrorHandler("User not found.", 400));
+  }
+
+  let userDocuments = await Document.findOne({ userId });
+  if (!userDocuments) userDocuments = {};
+
+  res.status(200).json({
+    success: true,
+    user,
+    userDocuments: userDocuments?.user_documents || {
+      gst: [],
+      itr: [],
+      misc: [],
+    },
+  });
 });
 
 // get user details
