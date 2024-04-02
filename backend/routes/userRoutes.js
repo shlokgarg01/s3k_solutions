@@ -22,7 +22,7 @@ router.route("/me").get(isAuthenticatedUser, getUserDetails);
 
 // Admin Routes
 router.route("/admin/users").get(isAuthenticatedUser, authorizeRoles(Enums.USER_ROLES.ADMIN), getAllUsers);
-router.route("/admin/user/:id").get(isAuthenticatedUser, authorizeRoles(Enums.USER_ROLES.ADMIN), userDetails);
+router.route("/admin/user/:id").get(isAuthenticatedUser, userDetails); // removed the admin auth from here because by mistake this API is being used in the customer app
 router.route("/admin/user/:id/reset_password").post(isAuthenticatedUser, authorizeRoles(Enums.USER_ROLES.ADMIN), resetPassword);
 router.route("/admin/user/:id/misc/new").post(isAuthenticatedUser, authorizeRoles(Enums.USER_ROLES.ADMIN), upload.any(), uploadMiscDocuments)
 router.route("/admin/user/:id/gst/new").post(isAuthenticatedUser, authorizeRoles(Enums.USER_ROLES.ADMIN), upload.any(), uploadGstDocuments)
