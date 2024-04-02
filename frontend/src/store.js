@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { thunk } from "redux-thunk";
 import {
+  adminDetailsReducer,
   allUsersReducer,
   newUserReducer,
-  resetUserPasswordReducer,
+  editUserReducer,
   secondaryUserReducer,
   userReducer,
 } from "./reducers/userReducers";
@@ -13,10 +14,12 @@ const reducer = combineReducers({
   user: userReducer,
   allUsers: allUsersReducer,
   newUser: newUserReducer,
-  resetPassword: resetUserPasswordReducer,
+  editUser: editUserReducer,
   secondaryUser: secondaryUserReducer,
 
-  uploadDocuments: uploadDocumentsReducer
+  uploadDocuments: uploadDocumentsReducer,
+
+  adminDetails: adminDetailsReducer
 });
 
 let initialState = {};

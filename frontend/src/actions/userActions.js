@@ -1,8 +1,8 @@
 import axiosInstance from "../utils/Config";
 import {
   CLEAR_ERRORS,
-  LOGOUT_SUCCESS,
-  LOGOUT_FAIL,
+  ADMIN_LOGOUT_SUCCESS,
+  ADMIN_LOGOUT_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -21,6 +21,14 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAIL,
+  GET_ADMIN_DETAILS_REQUEST,
+  GET_ADMIN_DETAILS_SUCCESS,
+  GET_ADMIN_DETAILS_FAIL,
+  EDIT_PROFILE_REQUEST,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAIL,
+  USER_LOGOUT_SUCCESS,
+  USER_LOGOUT_FAIL,
 } from "../constants/userConstants";
 
 // Login via email & password
@@ -59,15 +67,28 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-// logout user
-export const logout = () => async (dispatch) => {
+// logout user --Admin
+export const userLogout = (userId) => async (dispatch) => {
   try {
-    await axiosInstance.get(`/api/v1/logout`);
-    localStorage.clear();
-    dispatch({ type: LOGOUT_SUCCESS });
+    await axiosInstance.get(`/api/v1/logout/${userId}`);
+    dispatch({ type: USER_LOGOUT_SUCCESS });
   } catch (error) {
     dispatch({
-      type: LOGOUT_FAIL,
+      type: USER_LOGOUT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// logout admin --Admin
+export const adminLogout = (userId) => async (dispatch) => {
+  try {
+    await axiosInstance.get(`/api/v1/logout/${userId}`);
+    localStorage.clear();
+    dispatch({ type: ADMIN_LOGOUT_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_LOGOUT_FAIL,
       payload: error.response.data.message,
     });
   }
@@ -134,6 +155,39 @@ export const resetUserPassword = (userId, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: RESET_PASSWORD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Get Dashboard Details -- Admin
+export const dashboardDetails = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ADMIN_DETAILS_REQUEST });
+    const { data } = await axiosInstance.get(`/api/v1/admin/adminDetails`);
+    dispatch({ type: GET_ADMIN_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_ADMIN_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// Edit User Profile -- Admin
+export const editProfile = (userId, name, email) => async (dispatch) => {
+  try {
+    dispatch({ type: EDIT_PROFILE_REQUEST });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axiosInstance.put(
+      `/api/v1/admin/user/${userId}/update`,
+      { name, email },
+      config
+    );
+    dispatch({ type: EDIT_PROFILE_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: EDIT_PROFILE_FAIL,
       payload: error.response.data.message,
     });
   }

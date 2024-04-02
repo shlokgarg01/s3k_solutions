@@ -14,6 +14,7 @@ import ResetPassword from "../components/Admin/Users/ResetPassword";
 import NewItr from "../components/Admin/Users/NewItr";
 import NewGst from "../components/Admin/Users/NewGst";
 import NewMisc from "../components/Admin/Users/NewMisc";
+import EditProfile from "../components/Admin/Users/EditProfile";
 
 export default function AdminRoutes() {
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function AdminRoutes() {
             path="/admin/user/:id/reset_password"
             element={<ResetPassword />}
           />
+          <Route eact path="/admin/user/:id/edit" element={<EditProfile />} />
           <Route exact path="/admin/user/:id/gst/new" element={<NewGst />} />
           <Route exact path="/admin/user/:id/itr/new" element={<NewItr />} />
           <Route exact path="/admin/user/:id/misc/new" element={<NewMisc />} />

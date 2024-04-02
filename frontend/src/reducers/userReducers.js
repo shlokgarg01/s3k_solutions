@@ -3,14 +3,20 @@ import {
   ALL_USERS_REQUEST,
   ALL_USERS_SUCCESS,
   CLEAR_ERRORS,
+  EDIT_PROFILE_FAIL,
+  EDIT_PROFILE_REQUEST,
+  EDIT_PROFILE_SUCCESS,
+  GET_ADMIN_DETAILS_FAIL,
+  GET_ADMIN_DETAILS_REQUEST,
+  GET_ADMIN_DETAILS_SUCCESS,
   LOAD_USER_FAIL,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
-  LOGOUT_FAIL,
-  LOGOUT_SUCCESS,
+  ADMIN_LOGOUT_FAIL,
+  ADMIN_LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -20,6 +26,8 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_SUCCESS,
+  USER_LOGOUT_SUCCESS,
+  USER_LOGOUT_FAIL,
 } from "../constants/userConstants";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -38,7 +46,7 @@ export const userReducer = (state = { user: {} }, action) => {
         isAuthenticated: true,
         user: action.payload,
       };
-    case LOGOUT_SUCCESS:
+    case ADMIN_LOGOUT_SUCCESS:
       return {
         loading: false,
         user: null,
@@ -59,7 +67,7 @@ export const userReducer = (state = { user: {} }, action) => {
         user: null,
         error: action.payload,
       };
-    case LOGOUT_FAIL:
+    case ADMIN_LOGOUT_FAIL:
       return {
         ...state,
         loading: false,
@@ -130,20 +138,23 @@ export const newUserReducer = (state = { users: [] }, action) => {
       return {
         ...state,
         error: null,
-        isUserCreated: false
+        isUserCreated: false,
       };
     default:
       return state;
   }
 };
 
-export const resetUserPasswordReducer = (state = { users: [] }, action) => {
+export const editUserReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case RESET_PASSWORD_REQUEST:
+    case EDIT_PROFILE_REQUEST:
       return {
         loading: true,
       };
     case RESET_PASSWORD_SUCCESS:
+    case EDIT_PROFILE_SUCCESS:
+    case USER_LOGOUT_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -151,6 +162,8 @@ export const resetUserPasswordReducer = (state = { users: [] }, action) => {
         user: action.payload,
       };
     case RESET_PASSWORD_FAIL:
+    case EDIT_PROFILE_FAIL:
+    case USER_LOGOUT_FAIL:
       return {
         ...state,
         loading: false,
@@ -162,14 +175,14 @@ export const resetUserPasswordReducer = (state = { users: [] }, action) => {
       return {
         ...state,
         error: null,
-        isUpdated: false
+        isUpdated: false,
       };
     default:
       return state;
   }
 };
 
-export const secondaryUserReducer = (state = { users: [] }, action) => {
+export const secondaryUserReducer = (state = { users: [] }, action) => { // used to fetch user documents
   switch (action.type) {
     case USER_DETAILS_REQUEST:
       return {
@@ -188,6 +201,48 @@ export const secondaryUserReducer = (state = { users: [] }, action) => {
         loading: false,
         user: null,
         userDocuments: {},
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const adminDetailsReducer = (state = { adminDetails: {} }, action) => {
+  switch (action.type) {
+    case GET_ADMIN_DETAILS_REQUEST:
+      return {
+        loading: true,
+      };
+    case GET_ADMIN_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        adminDetails: {
+          usersCount: action.payload.usersCount,
+          totalDocuments: action.payload.totalDocuments,
+          itrDocumentsCount: action.payload.itrDocumentsCount,
+          gstDocumentsCount: action.payload.gstDocumentsCount,
+          miscDocumentsCount: action.payload.miscDocumentsCount,
+        },
+      };
+    case GET_ADMIN_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        user: null,
+        adminDetails: {
+          usersCount: 0,
+          totalDocuments: 0,
+          itrDocumentsCount: 0,
+          gstDocumentsCount: 0,
+          miscDocumentsCount: 0,
+        },
         error: action.payload,
       };
     case CLEAR_ERRORS:

@@ -7,6 +7,7 @@ export default function Input({
   onChange,
   required,
   icon,
+  readonly,
 }) {
   return (
     <div className="form-floating">
@@ -17,6 +18,7 @@ export default function Input({
           </span>
         )}
         <input
+          disabled={readonly}
           type={type}
           className="form-control"
           placeholder={placeholder}

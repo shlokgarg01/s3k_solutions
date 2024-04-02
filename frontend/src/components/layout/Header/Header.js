@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../actions/userActions";
+import { adminLogout } from "../../../actions/userActions";
 import { useAlert } from "react-alert";
 import logo from "../../../images/logo.png";
 import { Enums } from "../../../utils/Enums";
@@ -24,7 +24,7 @@ const Header = () => {
         >
           <img alt="Logo" src={logo} height="40" />
           &ensp;
-          <div className="navbar-brand">S3K Solutions</div>
+          <div className="navbar-brand">S3K Business Solutions</div>
         </Link>
         <button
           className="navbar-toggler"
@@ -45,6 +45,11 @@ const Header = () => {
                   Users
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link">
+                  Queries
+                </Link>
+              </li>
             </ul>
           )}
           <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
@@ -63,7 +68,7 @@ const Header = () => {
                     <Link
                       className="nav-link"
                       onClick={() => {
-                        dispatch(logout());
+                        dispatch(adminLogout(user._id));
                         alert.success("Logout Success");
                       }}
                     >

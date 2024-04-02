@@ -18,7 +18,7 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 
   // verifying that user should be signed in to one device only
   if (req.user.token !== token) {
-    return next(new ErrorHandler("Please login..", 401))
+    return next(new ErrorHandler("Please login.", 401))
   }
 
   next()
