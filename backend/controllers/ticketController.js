@@ -14,7 +14,7 @@ exports.createTicket = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Message is required", 400));
   }
 
-  await Ticket.create({
+  let ticket = await Ticket.create({
     title,
     message,
     user: req.user._id,
@@ -23,6 +23,7 @@ exports.createTicket = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Ticket created successfully",
+    ticket
   });
 });
 
