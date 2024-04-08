@@ -9,6 +9,7 @@ import {
   userReducer,
 } from "./reducers/userReducers";
 import { uploadDocumentsReducer } from "./reducers/documentReducer";
+import { allTicketsReducer, ticketInfoReducer, updateTicketReducer } from "./reducers/ticketReducer";
 
 const reducer = combineReducers({
   user: userReducer,
@@ -19,7 +20,11 @@ const reducer = combineReducers({
 
   uploadDocuments: uploadDocumentsReducer,
 
-  adminDetails: adminDetailsReducer
+  adminDetails: adminDetailsReducer,
+
+  tickets: allTicketsReducer,
+  ticket: ticketInfoReducer,
+  updatedTicket: updateTicketReducer
 });
 
 let initialState = {};

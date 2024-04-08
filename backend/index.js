@@ -9,6 +9,7 @@ const connectDatabase = require("./config/database.js")
 const path = require("path");
 
 const userRoutes = require("./routes/userRoutes");
+const ticketRoutes = require("./routes/ticketRoutes")
 
 app.use(morgan("combined"));
 
@@ -48,6 +49,7 @@ app.get("/ping", (req, res) => {
 })
 
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", ticketRoutes);
 
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 app.get("*", (req, res) => {

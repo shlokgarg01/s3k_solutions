@@ -15,6 +15,8 @@ import NewItr from "../components/Admin/Users/NewItr";
 import NewGst from "../components/Admin/Users/NewGst";
 import NewMisc from "../components/Admin/Users/NewMisc";
 import EditProfile from "../components/Admin/Users/EditProfile";
+import TicketsList from "../components/Admin/Tickets/TicketsList";
+import EditTicket from "../components/Admin/Tickets/EditTicket";
 
 export default function AdminRoutes() {
   useEffect(() => {
@@ -32,12 +34,16 @@ export default function AdminRoutes() {
         <Route element={<ProtectedRoute isAdmin />}>
           <Route exact path="/admin/users" element={<UsersList />} />
           <Route exact path="/admin/users/new" element={<NewUser />} />
+
+          <Route exact path="/admin/tickets" element={<TicketsList />} />
+          <Route exact path="/admin/ticket/:id" element={<EditTicket />} />
+
           <Route
             exact
             path="/admin/user/:id/reset_password"
             element={<ResetPassword />}
           />
-          <Route eact path="/admin/user/:id/edit" element={<EditProfile />} />
+          <Route exact path="/admin/user/:id/edit" element={<EditProfile />} />
           <Route exact path="/admin/user/:id/gst/new" element={<NewGst />} />
           <Route exact path="/admin/user/:id/itr/new" element={<NewItr />} />
           <Route exact path="/admin/user/:id/misc/new" element={<NewMisc />} />

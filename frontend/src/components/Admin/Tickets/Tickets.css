@@ -1,0 +1,13 @@
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table td {
+  max-width: 340px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3.6em;
+  line-height: 1.8em;
+}
