@@ -1,5 +1,8 @@
 import {
   CLEAR_ERRORS,
+  DELETE_DOC_FAIL,
+  DELETE_DOC_REQUEST,
+  DELETE_DOC_SUCCESS,
   UPLOAD_GST_DOC_FAIL,
   UPLOAD_GST_DOC_REQUEST,
   UPLOAD_GST_DOC_SUCCESS,
@@ -42,6 +45,36 @@ export const uploadDocumentsReducer = (state = { documents: {} }, action) => {
       return {
         ...state,
         isUploaded: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const deleteDocumentReducer = (state = { deletedDocument: {} }, action) => {
+  switch (action.type) {
+    case DELETE_DOC_REQUEST:
+      return {
+        loading: true,
+      };
+    case DELETE_DOC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: true,
+      };
+    case DELETE_DOC_FAIL:
+      return {
+        ...state,
+        loading: false,
+        isDeleted: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        isDeleted: false,
         error: null,
       };
     default:

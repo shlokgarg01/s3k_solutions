@@ -1,6 +1,9 @@
 import axiosInstance from "../utils/Config";
 import {
   CLEAR_ERRORS,
+  DELETE_DOC_FAIL,
+  DELETE_DOC_REQUEST,
+  DELETE_DOC_SUCCESS,
   UPLOAD_GST_DOC_FAIL,
   UPLOAD_GST_DOC_REQUEST,
   UPLOAD_GST_DOC_SUCCESS,
@@ -80,6 +83,27 @@ export const uploadItrDocument = (userId, name, file) => async (dispatch) => {
     });
   }
 };
+
+// Delete Document for a user
+export const deleteDocument =
+  (userId, doc_type, file_id) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_DOC_REQUEST });
+      const config = { headers: { "Content-Type": "application/json" } };
+
+      const { data } = await axiosInstance.delete(
+        `api/v1/admin/user/${userId}/${doc_type}/delete/${file_id}`,
+        config
+      );
+
+      dispatch({ type: DELETE_DOC_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: DELETE_DOC_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Used to clear all the errors
 export const clearErrors = () => async (dispatch) => {

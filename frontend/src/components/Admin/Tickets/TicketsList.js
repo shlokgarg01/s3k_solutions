@@ -62,7 +62,7 @@ export default function TicketsList() {
                         <th scope="row">{index + 1}.</th>
                         <td>{ticket.user.name}</td>
                         <td>{ticket.title}</td>
-                        <td>{ticket.message}</td>
+                        <td id="TicketMessage">{ticket.message}</td>
                         <td>{readableDateTimeFromString(ticket.createdAt)}</td>
                         <td
                           style={{

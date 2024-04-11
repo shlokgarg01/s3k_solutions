@@ -8,7 +8,7 @@ import {
   secondaryUserReducer,
   userReducer,
 } from "./reducers/userReducers";
-import { uploadDocumentsReducer } from "./reducers/documentReducer";
+import { deleteDocumentReducer, uploadDocumentsReducer } from "./reducers/documentReducer";
 import { allTicketsReducer, ticketInfoReducer, updateTicketReducer } from "./reducers/ticketReducer";
 
 const reducer = combineReducers({
@@ -19,6 +19,7 @@ const reducer = combineReducers({
   secondaryUser: secondaryUserReducer,
 
   uploadDocuments: uploadDocumentsReducer,
+  deletedDocument: deleteDocumentReducer,
 
   adminDetails: adminDetailsReducer,
 

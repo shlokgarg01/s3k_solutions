@@ -44,8 +44,8 @@ export default function EditTicket() {
 
     if (isUpdated) {
       alert.success("Status Updated");
-      dispatch(clearErrors())
-      navigate("/admin/tickets")
+      dispatch(clearErrors());
+      navigate("/admin/tickets");
     }
   }, [dispatch, alert, error, isUpdated]);
 
@@ -88,10 +88,9 @@ export default function EditTicket() {
                     if="ticket_message"
                     style={{ height: 140 }}
                     disabled
-                  >
-                    {ticket?.message}
-                  </textarea>
-                  <label for="ticket_message">Message</label>
+                    value={ticket?.message}
+                  />
+                  <label htmlFor="ticket_message">Message</label>
                 </div>
 
                 {ticket?.status !== Enums.TICKET_STATUS.CLOSED && (

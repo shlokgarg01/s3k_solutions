@@ -116,6 +116,7 @@ const UsersList = () => {
                                   <input
                                     onClick={() => setUserToBeLoggedOut(user)}
                                     className="btn btn-sm btn-danger"
+                                    readOnly
                                     data-bs-toggle="modal"
                                     data-bs-target="#logoutUserConfirmation"
                                     value="Logout"
