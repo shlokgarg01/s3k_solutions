@@ -3,6 +3,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Ticket = require("../models/ticketModel");
 const Enums = require("../utils/Enums");
 const { populateUsers } = require("../services/TicketService");
+const {SortObjectByKeys} = require("../utils/Helpers.js")
 
 // Create a new Query Ticket
 exports.createTicket = catchAsyncErrors(async (req, res, next) => {
@@ -38,6 +39,7 @@ exports.getAllTickets = catchAsyncErrors(async (req, res, next) => {
     },
   ]);
   let tickets = await populateUsers(data);
+  tickets = SortObjectByKeys(tickets)
 
   res.status(200).json({
     success: true,

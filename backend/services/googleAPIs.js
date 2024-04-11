@@ -44,3 +44,15 @@ exports.uploadFile = async (fileObject, driveFolderName) => {
     fileUrl: `https://drive.google.com/file/d/${data.id}`,
   };
 };
+
+exports.deleteFile = async (file_id) => {
+  const auth = await authorize();
+  await google
+    .drive({
+      version: "v3",
+      auth,
+    })
+    .files.delete({ fileId: file_id });
+
+  return true;
+};

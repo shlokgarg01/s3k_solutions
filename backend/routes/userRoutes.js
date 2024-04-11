@@ -16,6 +16,7 @@ const {
   uploadMiscDocuments,
   uploadGstDocuments,
   uploadItrDocuments,
+  deleteFile,
 } = require("../controllers/documentController");
 const router = express.Router();
 const multer = require("multer");
@@ -65,6 +66,13 @@ router
     authorizeRoles(Enums.USER_ROLES.ADMIN),
     upload.any(),
     uploadItrDocuments
+  );
+router
+  .route(`/admin/user/:id/:doc_type/delete/:file_id`)
+  .delete(
+    isAuthenticatedUser,
+    authorizeRoles(Enums.USER_ROLES.ADMIN),
+    deleteFile
   );
 router
   .route("/admin/adminDetails")
